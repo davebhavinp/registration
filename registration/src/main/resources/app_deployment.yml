@@ -1,0 +1,22 @@
+---
+apiVersion: apps/v1
+kind: Deployment 
+metadata: 
+  name: registration-deployment 
+  labels: 
+    app: registration
+spec: 
+  replicas: 1
+  selector: 
+    matchLabels: 
+      app: registration 
+  template: 
+    metadata: 
+      labels: 
+        app: registration
+    spec: 
+      containers: 
+        - name: registration-app
+          image: davebhavinp/registration:1.0.2
+          ports: 
+            - containerPort: 8991

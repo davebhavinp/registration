@@ -1,0 +1,13 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: regdb-service
+spec:
+  selector:
+    app: regdb
+  ports: 
+  - name: regdb-service
+    port: 3306
+    targetPort: 3306
+  type: ClusterIP  

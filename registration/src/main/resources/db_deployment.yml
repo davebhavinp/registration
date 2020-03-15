@@ -1,0 +1,36 @@
+---
+apiVersion: apps/v1 
+kind: Deployment 
+metadata: 
+  name: regdb-deployment 
+  labels: 
+    app: regdb 
+spec: 
+  replicas: 1
+  selector:   
+    matchLabels: 
+      app: regdb 
+  template: 
+    metadata: 
+      labels: 
+        app: regdb 
+    spec: 
+      containers: 
+        - name: regdb 
+          image: mysql:8.0
+          ports: 
+            - containerPort: 3306 
+          volumeMounts: 
+            - mountPath: "/var/lib/mysql" 
+              subPath: "mysql"
+              name: regdb-data
+          env: 
+            - name: MYSQL_ROOT_PASSWORD
+              valueFrom: 
+                secretKeyRef: 
+                  name: mysql-secrets 
+                  key: ROOT_PASSWORD 
+      volumes: 
+        - name: regdb-data
+          persistentVolumeClaim: 
+            claimName: regdb-data-disk                 
